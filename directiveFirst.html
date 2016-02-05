@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <title>Model Window Directive</title>
+    <style>
+        .modal-overlay{
+            position:absolute;
+            z-index:9999;
+            top:0;
+            left:0;
+            width:100%;
+            height: 100%;
+            background-color: #000;
+            opacity: 0.8;
+        }
+        .modal-background{
+            z-index:10000;
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%-50%);
+            background-color: #fff;
+        }
+        .modal-content{
+            padding:10px;
+            text-align: center;
+        }
+        .modal-close{
+            position:absolute;
+            top: 5px;
+            right: 5px;
+            padding: 5px;
+            cursor: pointer;
+            display: inline-block;
+        }
+    </style>
+</head>
+<body ng-app="SimpleModal">
+    <div ng-controller="ModalCtrl">
+        <button ng-click='toggleModal()'>Open Modal</button>
+        <modal-window show='modalShown' width="400px"
+                height="60%">
+            <p>Hello Simple Modal Window</p>
+        </modal-window>
+    </div>
+</body>
+<script src="../../JSFile/angular.min.js"></script>
+<script>
+    var app=angular.module('SimpleModal',[]);
+    app.directive('modalWindow',function(){
+        return{
+            restrict:'E',
+            scope:{
+                show:'='
+            },
+            replace:true,
+            transclude:true,
+            link:function(scope,ele,attrs){
+                scope.windowStyle={};
+                if(attrs.width){
+                    scope.windowStyle.width=attrs.width;
+                }
+                if(attrs.height){
+                    scope.windowStyle.height=attrs.height;
+                }
+                scope.hideModal=function(){
+                    scope.show=false;
+                };
+            },
+            template:"<div ng-show='show'>" +
+                        "<div class='modal-overlay' ng-click='hideModal()'></div>" +
+                        "<div class='modal-background' ng-style='windowStyle'>" +
+                            "<div class='modal-close' ng-click='hideModal()'>X</div>" +
+                            "<div class='modal-content' ng-transclude></div>" +
+                       "</div>"
+        };
+    });
+    app.controller('ModalCtrl',['$scope',
+    function($scope){
+        $scope.modalShown=false;
+        $scope.toggleModal=function(){
+            $scope.modalShown=!$scope.modalShown;
+        };
+    }]);
+</script>
+</html>
