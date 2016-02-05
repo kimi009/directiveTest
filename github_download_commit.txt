@@ -1,0 +1,22 @@
+1.首先创建SSH Keys 文件
+   输入命令：ssh-keygen -t rsa -C '444812002@qq.com' 
+    输入后连续三次回车键就会在默认的文件夹下生成keys
+    keys文件名*.pub
+2 打开pub文件拷贝里面的内容，然后到github主页，点击 add SSH keys
+   随便起个名字复制keys到里面
+3. 回到msysgit 命令行中  使用SSH -T git@github.com测试
+ 
+4.可以克隆github的代码到本地,可以事先到克隆的目标文件夹下 cd E:
+   git clone 后面是github代码的地址
+5. 使用命令git add xxx添加该文件
+   使用命令 git commit -m "我想说的话"  把该操作提交到代码库
+    这句话执行的时候可能会报错，没关系，照下面的步骤走起：
+    注意：这个地方必须是在你的github账户下的操作
+    你可以先在github上创建一个空的项目，然后根据该地址把这个空的项目
+	下载到本地，
+	5.1  先运行下面的命令
+             git config --global user.email "444812002@qq.com"
+             git config --global user.name "kimi009"
+        5.2  git commit -m "我想说的话"  此时执行成功
+6.  git push  走完这里就会把你本地的代码提交到github服务器上
+	      不信你可去看看
